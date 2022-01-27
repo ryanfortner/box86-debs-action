@@ -30,7 +30,6 @@ jobs:
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
             make -j4 &&
             make package &&
-            FILE64="$(basename *.deb | sed 's/.\{4\}$//')" &&
             rm -rf ../../box64*.deb &&
             mv ./*.deb ../../ &&
             cd ../../ &&
@@ -49,7 +48,6 @@ jobs:
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
             make -j4 &&
             make package &&
-            FILE="$(basename *.deb | sed 's/.\{4\}$//')" &&
             rm -rf ../../box86*.deb &&
             mv ./*.deb ../../ &&
             cd ../../ &&
@@ -60,5 +58,5 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git add .
-          git commit -m "Upload box64 ${FILE64} and box86 ${FILE}" 
+          git commit -m "Upload box64 and box64 for $(printf '%(%Y-%m-%d)T\n' -1)" 
           git push
