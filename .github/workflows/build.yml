@@ -1,4 +1,4 @@
-name: Build-Box86
+name: build
 
 on:
   push:
@@ -23,6 +23,25 @@ jobs:
             "apt update &&
             apt install build-essential dpkg-dev make gcc git python3 cmake -y &&
             cd /github/workspace &&
+            git clone https://github.com/ptitSeb/box64.git &&
+            cd ./box64 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
+            make -j4 &&
+            make package &&
+            FILE64="$(basename *.deb | sed 's/.\{4\}$//')"
+            rm -rf ../../box64*.deb
+            mv ./*.deb ../../ &&
+            cd ../../ &&
+            rm -rf ./box64/"
+      - uses: docker://multiarch/ubuntu-core:armhf-bionic
+        with:
+          args: >
+            bash -c
+            "apt update &&
+            apt install build-essential dpkg-dev make gcc git python3 cmake -y &&
+            cd /github/workspace &&
             git clone https://github.com/ptitSeb/box86.git &&
             cd ./box86 &&
             mkdir build &&
@@ -30,14 +49,16 @@ jobs:
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
             make -j4 &&
             make package &&
+            FILE="$(basename *.deb | sed 's/.\{4\}$//')"
+            rm -rf ../../box86*.deb
             mv ./*.deb ../../ &&
             cd ../../ &&
-            rm -rf ./box64/"
+            rm -rf ./box86/"
             
       - name: Upload
         run: |
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git add .
-          git commit -m "Upload box86 v$(curl -s https://api.github.com/repos/ptitSeb/box86/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")' | tr -d 'v')" 
+          git commit -m "Upload box64 ${FILE64} and box86 ${FILE}" 
           git push
