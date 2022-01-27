@@ -28,7 +28,7 @@ jobs:
             mkdir build &&
             cd build &&
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
-            make -j4 &&
+            make &&
             make package &&
             rm -rf ../../box64*.deb &&
             mv ./*.deb ../../ &&
@@ -46,7 +46,7 @@ jobs:
             mkdir build &&
             cd build &&
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
-            make -j4 &&
+            make &&
             make package &&
             rm -rf ../../box86*.deb &&
             mv ./*.deb ../../ &&
