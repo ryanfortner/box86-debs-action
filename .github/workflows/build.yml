@@ -45,7 +45,7 @@ jobs:
             cd ./box86 &&
             mkdir build &&
             cd build &&
-            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DRPI4=1 &&
             make &&
             make package &&
             rm -rf ../../box86*.deb &&
