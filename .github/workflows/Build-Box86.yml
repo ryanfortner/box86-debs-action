@@ -1,0 +1,43 @@
+name: Build-Box86
+
+on:
+  push:
+  schedule:
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up multiarch/qemu-user-static
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static:register --reset
+      - uses: docker://multiarch/ubuntu-core:arm64-bionic
+        with:
+          args: >
+            bash -c
+            "apt update &&
+            apt install build-essential dpkg-dev make gcc git python3 cmake -y &&
+            cd /github/workspace &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
+            make -j4 &&
+            make package &&
+            mv ./*.deb ../../ &&
+            cd ../../ &&
+            rm -rf ./box64/"
+            
+      - name: Upload
+        run: |
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add .
+          git commit -m "Upload box86 v$(curl -s https://api.github.com/repos/ptitSeb/box86/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")' | tr -d 'v')" 
+          git push
