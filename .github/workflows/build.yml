@@ -30,8 +30,8 @@ jobs:
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
             make -j4 &&
             make package &&
-            FILE64="$(basename *.deb | sed 's/.\{4\}$//')"
-            rm -rf ../../box64*.deb
+            FILE64="$(basename *.deb | sed 's/.\{4\}$//')" &&
+            rm -rf ../../box64*.deb &&
             mv ./*.deb ../../ &&
             cd ../../ &&
             rm -rf ./box64/"
@@ -49,8 +49,8 @@ jobs:
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
             make -j4 &&
             make package &&
-            FILE="$(basename *.deb | sed 's/.\{4\}$//')"
-            rm -rf ../../box86*.deb
+            FILE="$(basename *.deb | sed 's/.\{4\}$//')" &&
+            rm -rf ../../box86*.deb &&
             mv ./*.deb ../../ &&
             cd ../../ &&
             rm -rf ./box86/"
