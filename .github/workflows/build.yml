@@ -29,7 +29,7 @@ jobs:
             cd build &&
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
             make -j4 &&
-            make pack &&
+            make package &&
             mv ./*.deb ../../ &&
             cd ../../ &&
             rm -rf ./box64/"
