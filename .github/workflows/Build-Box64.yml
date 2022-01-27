@@ -1,4 +1,4 @@
-name: Build
+name: Build-Box64
 
 on:
   push:
