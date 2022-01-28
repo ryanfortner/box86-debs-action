@@ -16,27 +16,6 @@ jobs:
       - name: Set up multiarch/qemu-user-static
         run: |
           docker run --rm --privileged multiarch/qemu-user-static:register --reset
-      - uses: docker://multiarch/ubuntu-core:arm64-bionic
-        with:
-          args: >
-            bash -c
-            "apt update &&
-            apt install build-essential dpkg-dev make gcc git python3 cmake -y &&
-            cd /github/workspace &&
-            git clone https://github.com/ptitSeb/box64.git &&
-            cd ./box64 &&
-            mkdir build &&
-            cd build &&
-            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DRPI4ARM64=1  &&
-            make -j4 &&
-            make package &&
-            rm -rf ../../box64*.deb &&
-            rm -rf ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
-            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
-            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box64/arm64/rpi &&
-            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box64/arm64/rpi/ &&
-            cd ../../ &&
-            rm -rf ./box64/"
       - uses: docker://multiarch/ubuntu-core:armhf-bionic
         with:
           args: >
@@ -49,12 +28,130 @@ jobs:
             mkdir build &&
             cd build &&
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DRPI4=1 &&
-            make -j4 &&
+            make -j8 &&
+            make package &&
+            rm -rf ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            rm -rf ../../box86*.deb &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/rpi4 &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/rpi4/ &&
+            cd ../../ &&
+            rm -rf ./box86/ &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DPANDORA=1 &&
+            make -j8 &&
             make package &&
             rm -rf ../../box86*.deb &&
             mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
-            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/armhf/rpi &&
-            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/armhf/rpi/ &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/pandora &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/pandora/ &&
+            cd ../../ &&
+            rm -rf ./box86/ &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DPYRA=1 &&
+            make -j8 &&
+            make package &&
+            rm -rf ../../box86*.deb &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/pyra &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/pyra/ &&
+            cd ../../ &&
+            rm -rf ./box86/ &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DGAMESHELL=1 &&
+            make -j8 &&
+            make package &&
+            rm -rf ../../box86*.deb &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/gameshell &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/gameshell/ &&
+            cd ../../ &&
+            rm -rf ./box86/ &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DODROID=1 &&
+            make -j8 &&
+            make package &&
+            rm -rf ../../box86*.deb &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/odroid &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/odroid/ &&
+            cd ../../ &&
+            rm -rf ./box86/ &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DRK3399=1 &&
+            make -j8 &&
+            make package &&
+            rm -rf ../../box86*.deb &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/rk3399 &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/rk3399/ &&
+            cd ../../ &&
+            rm -rf ./box86/ &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DRK3288=1 &&
+            make -j8 &&
+            make package &&
+            rm -rf ../../box86*.deb &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/rk3288 &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/rk3288/ &&
+            cd ../../ &&
+            rm -rf ./box86/ &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DA64=1 &&
+            make -j8 &&
+            make package &&
+            rm -rf ../../box86*.deb &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/allwinner-a64 &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/allwinner-a64/ &&
+            cd ../../ &&
+            rm -rf ./box86/ &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DSD845=1 &&
+            make -j8 &&
+            make package &&
+            rm -rf ../../box86*.deb &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/snapdragon-845 &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/snapdragon-845/ &&
+            cd ../../ &&
+            rm -rf ./box86/ &&
+            git clone https://github.com/ptitSeb/box86.git &&
+            cd ./box86 &&
+            mkdir build &&
+            cd build &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DPHYTIUM=1 &&
+            make -j8 &&
+            make package &&
+            rm -rf ../../box86*.deb &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/phytium &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/phytium/ &&
             cd ../../ &&
             rm -rf ./box86/"
             
@@ -63,5 +160,5 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git add .
-          git commit -m "Upload box86 and box64 for $(printf '%(%Y-%m-%d)T\n' -1)" 
+          git commit -m "Upload box86 for $(printf '%(%Y-%m-%d)T\n' -1)" 
           git push
