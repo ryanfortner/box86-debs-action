@@ -119,19 +119,6 @@ jobs:
             cd ./box86 &&
             mkdir build &&
             cd build &&
-            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DA64=1 &&
-            make -j8 &&
-            make package &&
-            rm -rf ../../box86*.deb &&
-            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
-            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/allwinner-a64 &&
-            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/allwinner-a64/ &&
-            cd ../../ &&
-            rm -rf ./box86/ &&
-            git clone https://github.com/ptitSeb/box86.git &&
-            cd ./box86 &&
-            mkdir build &&
-            cd build &&
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DSD845=1 &&
             make -j8 &&
             make package &&
