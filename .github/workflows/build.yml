@@ -31,6 +31,7 @@ jobs:
             make -j4 &&
             make package &&
             rm -rf ../../box64*.deb &&
+            rm -rf ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
             mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
             mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box64/arm64/rpi &&
             mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box64/arm64/rpi/ &&
