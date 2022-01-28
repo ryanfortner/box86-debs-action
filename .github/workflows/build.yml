@@ -27,12 +27,13 @@ jobs:
             cd ./box64 &&
             mkdir build &&
             cd build &&
-            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DARM_DYNAREC=1 &&
-            make &&
+            cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DRPI4ARM64=1  &&
+            make -j4 &&
             make package &&
             rm -rf ../../box64*.deb &&
             mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
-            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box64/arm64/rpi &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box64/arm64/rpi/ &&
             cd ../../ &&
             rm -rf ./box64/"
       - uses: docker://multiarch/ubuntu-core:armhf-bionic
@@ -47,11 +48,12 @@ jobs:
             mkdir build &&
             cd build &&
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DRPI4=1 &&
-            make &&
+            make -j4 &&
             make package &&
             rm -rf ../../box86*.deb &&
             mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
-            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
+            mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/armhf/rpi &&
+            mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/box86/armhf/rpi/ &&
             cd ../../ &&
             rm -rf ./box86/"
             
