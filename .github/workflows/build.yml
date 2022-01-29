@@ -22,7 +22,6 @@ jobs:
             "apt update &&
             apt install build-essential dpkg-dev make gcc git python3 cmake -y &&
             cd /github/workspace &&
-            echo "Building for rpi4" &&
             git clone https://github.com/ptitSeb/box86.git &&
             cd ./box86 &&
             mkdir build &&
@@ -36,7 +35,6 @@ jobs:
             mv ./*.deb ../../$(printf '%(%Y-%m-%d)T\n' -1)/rpi4/ &&
             cd ../../ &&
             rm -rf ./box86/ &&
-            echo "Building for pandora" &&
             git clone https://github.com/ptitSeb/box86.git &&
             cd ./box86 &&
             mkdir build &&
