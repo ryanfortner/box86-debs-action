@@ -29,7 +29,6 @@ jobs:
             cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DPANDORA=1 &&
             make -j8 &&
             make package &&
-            rm -rf ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
             rm -rf ../../box86*.deb &&
             mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1) &&
             mkdir -p ../../$(printf '%(%Y-%m-%d)T\n' -1)/pandora &&
