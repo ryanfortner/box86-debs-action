@@ -19,7 +19,7 @@ jobs:
         with:
           args: >
             bash -c
-            "pwd"
+            "pwd && ls && pwd"
             
       - name: Upload
         run: |
